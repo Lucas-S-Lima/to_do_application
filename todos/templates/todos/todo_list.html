@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}
+    Lista de Tarefas
+{% endblock page_title %}
+    
+{% block content %}
+    <h1 class="fs-3 mb-3">Suas tarefas</h1>
+
+    {% if todo_list %}
+
+        <table class="table container">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Título</th>
+                <th scope="col">Criado em</th>
+                <th scope="col">Entregue em</th>
+                <th scope="col">Data final</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for todo in todo_list %}
+                    <tr>
+                        <th scope="row">{{ todo.pk }}</th>
+                        <td>{{ todo.title }}</td>
+                        <td>{{ todo.created_at }}</td>
+                        <td>{{ todo.finished_at|default:"-" }}</td>
+                        <td>{{ todo.deadline }}</td>
+                        <td>
+                            <a href="{% url 'todo_complete' pk=todo.pk%}" class="btn btn-primary btn-sm {% if todo.finished_at %}disabled{% endif %}">Concluída</a>
+                            <a href="{% url 'todo_update' pk=todo.pk %}" class="btn btn-success btn-sm {% if todo.finished_at %}disabled{% endif %}">Editar</a>
+                            <a href="{% url 'todo_delete' pk=todo.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr> 
+                {% endfor %}        
+            </tbody>
+        </table> 
+
+    {% else %}
+        <h5 class="container text-primary ">Você não possui nenhuma tarefa!</h5>
+    {% endif %}
+
+    <a href={% url "todo_create" %} class="btn btn-primary">Nova Tarefa</a>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}
+  Excluir Tarefa
+{% endblock page_title %}
+
+{% block content %}
+  <form method="POST">
+    {% csrf_token %}
+
+    <h2>Exclusão de tarefa</h2>
+    <p>Tem certeza que deseja excluir a tarefa: <strong>{{ todo.title }}</strong>?</p>
+
+    <button type="submit" class="btn btn-danger">Sim, excluir</button>
+    <a href="{% url 'todo_list' %}" class="btn btn-warning">Cancelar</a>
+
+  </form>
+{% endblock content %}
+
+
